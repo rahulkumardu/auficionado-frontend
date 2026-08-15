@@ -3,39 +3,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Auficionado – Audiobook Catalog</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auficionado Audiobooks</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
-  <!-- Header -->
+<body>
   <header>
-    <h1>Auficionado</h1>
-    <p>Your Audiobook Discovery Prototype</p>
+    <h1>Auficionado Audiobooks</h1>
+    <p class="subtitle">Discover curated audiobooks powered by Neon + Railway</p>
   </header>
 
-  <!-- Progress Section -->
-  <section id="progress">
-    <h2>Project Progress</h2>
-    <ul>
-      <li>✔ Front-end prototype built</li>
-      <li>✔ Backend API connected to Neon PostgreSQL</li>
-      <li>✔ 12-table database schema implemented</li>
-      <li>✔ Audiobooks endpoint live via Railway</li>
-      <li>✔ Front-end pulling real data</li>
-    </ul>
-  </section>
+  <main>
+    <div id="loader" class="loader"></div>
+    <div id="audiobook-list" class="grid"></div>
+  </main>
 
-  <!-- Catalog Section -->
-  <section id="catalog">
-    <h2>Audiobook Catalog</h2>
-    <div id="audiobook-grid"></div>
-  </section>
-
-  <!-- Footer -->
   <footer>
-    <p>Auficionado Web App Prototype • Powered by Neon + Railway + Vercel</p>
+    <p>© 2026 Auficionado Prototype</p>
   </footer>
 
   <script src="app.js"></script>

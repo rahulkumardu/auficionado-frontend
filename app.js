@@ -1,32 +1,39 @@
 // Rahul Kumar - Auficionado Prototype (Front-End Only)
 
-// Railway backend API endpoint
 const API_URL = "https://auficionado-backend-production.up.railway.app/api/audiobooks";
 
-// Fetch audiobooks from backend
 async function loadAudiobooks() {
-  try {
-    const res = await fetch(API_URL);
+  const loader = document.getElementById("loader");
+  const container = document.getElementById("audiobook-list");
 
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status}`);
-    }
+  try {
+    loader.style.display = "block";
+
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
 
     const data = await res.json();
+    loader.style.display = "none";
+
     renderAudiobooks(data);
 
   } catch (err) {
     console.error("Failed to load audiobooks:", err);
-    document.getElementById("audiobook-list").innerHTML = `
-      <p style="color:red;">Failed to load audiobooks. Check backend deployment.</p>
+    loader.style.display = "none";
+
+    container.innerHTML = `
+      <div class="audiobook-card" style="border-left: 4px solid red;">
+        <h3>Error Loading Audiobooks</h3>
+        <p>Could not connect to the backend API.</p>
+        <p style="color:red;">${err.message}</p>
+      </div>
     `;
   }
 }
 
-// Render audiobook cards into the page
 function renderAudiobooks(audiobooks) {
   const container = document.getElementById("audiobook-list");
-  container.innerHTML = ""; // Clear previous content
+  container.innerHTML = "";
 
   audiobooks.forEach(book => {
     const card = document.createElement("div");
@@ -43,5 +50,4 @@ function renderAudiobooks(audiobooks) {
   });
 }
 
-// Load data when page loads
 document.addEventListener("DOMContentLoaded", loadAudiobooks);
