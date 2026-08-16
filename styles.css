@@ -1,8 +1,8 @@
-/* Rahul Kumar - Auficionado Prototype (Front-End Only) */
+/* Rahul Kumar - Auficionado Front-End */
 
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #f5f7fa;
   color: #222;
 }
@@ -19,19 +19,92 @@ header {
   opacity: 0.9;
 }
 
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Controls: search + tabs */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccd1d9;
+  font-size: 0.95rem;
+}
+
+.search-bar button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #007aff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.search-bar button:hover {
+  background: #005fcc;
+  transform: translateY(-1px);
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #ccd1d9;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab.active {
+  background: #007aff;
+  color: white;
+  border-color: #007aff;
+}
+
+/* Grid + cards */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  padding: 2rem;
+  margin-top: 1rem;
 }
 
 .audiobook-card {
   background: white;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .audiobook-card:hover {
@@ -39,9 +112,23 @@ header {
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
+.cover {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 220px;
+}
+
 .audiobook-card h3 {
-  margin-top: 0;
+  margin: 0.3rem 0 0.1rem;
   color: #007aff;
+  font-size: 1.05rem;
+}
+
+.audiobook-card p {
+  margin: 0.1rem 0;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 footer {
@@ -53,6 +140,7 @@ footer {
 }
 
 /* Loader */
+
 .loader {
   border: 6px solid #e0e0e0;
   border-top: 6px solid #007aff;
@@ -61,8 +149,21 @@ footer {
   height: 48px;
   animation: spin 1s linear infinite;
   margin: 2rem auto;
+  display: none;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Responsive tweaks */
+
+@media (max-width: 600px) {
+  .controls {
+    padding: 0 0.5rem;
+  }
+
+  main {
+    padding: 1rem 0.5rem;
+  }
 }

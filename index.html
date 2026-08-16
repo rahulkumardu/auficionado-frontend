@@ -1,4 +1,4 @@
-<!-- Rahul Kumar - Auficionado Prototype (Front-End Only) -->
+<!-- Rahul Kumar - Auficionado Front-End -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +12,29 @@
 <body>
   <header>
     <h1>Auficionado Audiobooks</h1>
-    <p class="subtitle">Discover curated audiobooks powered by Neon + Railway</p>
+    <p class="subtitle">Discover audiobooks powered by Open Library</p>
   </header>
 
   <main>
+    <section class="controls">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search audiobooks by title or author..."
+        />
+        <button id="search-button">Search</button>
+      </div>
+
+      <div class="tabs" id="category-tabs">
+        <button class="tab active" data-category="all">All</button>
+        <button class="tab" data-category="fiction">Fiction</button>
+        <button class="tab" data-category="nonfiction">Nonfiction</button>
+        <button class="tab" data-category="science">Science</button>
+        <button class="tab" data-category="history">History</button>
+      </div>
+    </section>
+
     <div id="loader" class="loader"></div>
     <div id="audiobook-list" class="grid"></div>
   </main>
