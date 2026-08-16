@@ -8,7 +8,7 @@ body.light-mode {
 
 body.dark-mode {
   background: #1e1e1e;
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 .dark-toggle {
@@ -174,7 +174,7 @@ header {
   cursor: pointer;
 }
 
-/* Audio Player Mock-Up */
+/* Audio Player */
 .audio-player {
   margin-top: 1rem;
 }
@@ -227,4 +227,50 @@ header {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+/* ⭐ Dark Mode Overrides */
+body.dark-mode .audiobook-card,
+body.dark-mode .modal-content,
+body.dark-mode .favorites-panel {
+  background: #2b2b2b;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.08);
+}
+
+body.dark-mode .tab {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .tab.active {
+  background: #007aff;
+  color: #fff;
+}
+
+body.dark-mode .search-bar input {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .search-bar button {
+  background: #005fcc;
+}
+
+body.dark-mode .load-more {
+  background: #005fcc;
+}
+
+body.dark-mode .modal-close {
+  color: #fff;
+}
+
+body.dark-mode .audio-bar {
+  background: #555;
+}
+
+body.dark-mode .audio-progress {
+  background: #007aff;
 }

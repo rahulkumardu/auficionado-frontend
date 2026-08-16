@@ -15,6 +15,15 @@ let currentSearchTerm = "";
 let currentPage = 1;
 let favorites = [];
 
+// ⭐ Real audio samples (public domain demo clips)
+const AUDIO_SAMPLES = {
+  "Pride and Prejudice": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "Moby Dick": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  "The Art of War": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+  "Frankenstein": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+  "Dracula": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+};
+
 // Build query
 function buildQuery() {
   const base = CATEGORY_QUERIES[currentCategory];
@@ -84,6 +93,16 @@ function openModal(book, cover) {
   document.getElementById("modal-description").textContent =
     book.subtitle || "No description available.";
 
+  // ⭐ Set audio sample
+  const audioSrc = document.getElementById("modal-audio-src");
+  const sample =
+    AUDIO_SAMPLES[book.title] ||
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3";
+
+  audioSrc.src = sample;
+  document.getElementById("modal-audio").load();
+
+  // ⭐ Favorites button
   document.getElementById("favorite-btn").onclick = () => addFavorite(book, cover);
 
   modal.classList.remove("hidden");
