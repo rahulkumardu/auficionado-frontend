@@ -1,32 +1,42 @@
 /* Rahul Kumar - Auficionado Front-End */
 
-body {
-  margin: 0;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+/* Light & Dark Mode */
+body.light-mode {
   background: #f5f7fa;
   color: #222;
 }
 
+body.dark-mode {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+/* Header */
 header {
   text-align: center;
   padding: 2rem 1rem;
   background: linear-gradient(135deg, #4a90e2, #007aff);
   color: white;
+  position: relative;
 }
 
 .subtitle {
-  margin-top: 0.5rem;
   opacity: 0.9;
 }
 
-main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-
-/* Controls: search + tabs */
-
+/* Controls */
 .controls {
   display: flex;
   flex-direction: column;
@@ -44,7 +54,6 @@ main {
   padding: 0.6rem 0.8rem;
   border-radius: 8px;
   border: 1px solid #ccd1d9;
-  font-size: 0.95rem;
 }
 
 .search-bar button {
@@ -55,16 +64,9 @@ main {
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.search-bar button:hover {
-  background: #005fcc;
-  transform: translateY(-1px);
 }
 
 /* Tabs */
-
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -77,23 +79,18 @@ main {
   border: 1px solid #ccd1d9;
   background: white;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .tab.active {
   background: #007aff;
   color: white;
-  border-color: #007aff;
 }
 
-/* Grid + cards */
-
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  margin-top: 1rem;
 }
 
 .audiobook-card {
@@ -101,46 +98,22 @@ main {
   padding: 1.2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  transition: transform 0.25s ease;
+  cursor: pointer;
 }
 
 .audiobook-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .cover {
   width: 100%;
   border-radius: 8px;
-  object-fit: cover;
   max-height: 220px;
-}
-
-.audiobook-card h3 {
-  margin: 0.3rem 0 0.1rem;
-  color: #007aff;
-  font-size: 1.05rem;
-}
-
-.audiobook-card p {
-  margin: 0.1rem 0;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-footer {
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-  background: #eef1f5;
-  font-size: 0.9rem;
+  object-fit: cover;
 }
 
 /* Loader */
-
 .loader {
   border: 6px solid #e0e0e0;
   border-top: 6px solid #007aff;
@@ -156,14 +129,102 @@ footer {
   to { transform: rotate(360deg); }
 }
 
-/* Responsive tweaks */
+/* Load More */
+.load-more {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  background: #007aff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
 
-@media (max-width: 600px) {
-  .controls {
-    padding: 0 0.5rem;
-  }
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
 
-  main {
-    padding: 1rem 0.5rem;
-  }
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-close {
+  float: right;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Audio Player Mock-Up */
+.audio-player {
+  margin-top: 1rem;
+}
+
+.audio-btn {
+  padding: 0.5rem 1rem;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.audio-bar {
+  width: 100%;
+  height: 6px;
+  background: #ddd;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.audio-progress {
+  width: 30%;
+  height: 100%;
+  background: #007aff;
+  border-radius: 4px;
+}
+
+/* Favorites Panel */
+.favorites-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 260px;
+  height: 100%;
+  background: white;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.favorites-panel.hidden {
+  display: none;
+}
+
+.favorite-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: gold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }

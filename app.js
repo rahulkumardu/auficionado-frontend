@@ -1,9 +1,7 @@
 // Rahul Kumar - Auficionado Front-End
 
-// Base Open Library search endpoint
 const BASE_API_URL = "https://openlibrary.org/search.json";
 
-// Simple mapping from category to query term
 const CATEGORY_QUERIES = {
   all: "audiobook",
   fiction: "audiobook fiction",
@@ -14,66 +12,44 @@ const CATEGORY_QUERIES = {
 
 let currentCategory = "all";
 let currentSearchTerm = "";
+let currentPage = 1;
+let favorites = [];
 
-// Build query string for Open Library
+// Build query
 function buildQuery() {
-  const base = CATEGORY_QUERIES[currentCategory] || CATEGORY_QUERIES.all;
-
-  if (currentSearchTerm.trim()) {
-    return `${base} ${currentSearchTerm.trim()}`;
-  }
-
-  return base;
+  const base = CATEGORY_QUERIES[currentCategory];
+  return currentSearchTerm.trim()
+    ? `${base} ${currentSearchTerm.trim()}`
+    : base;
 }
 
-// Fetch audiobooks from Open Library
-async function loadAudiobooks() {
+// Fetch audiobooks
+async function loadAudiobooks(append = false) {
   const loader = document.getElementById("loader");
   const container = document.getElementById("audiobook-list");
 
   try {
     loader.style.display = "block";
-    container.innerHTML = "";
+    if (!append) container.innerHTML = "";
 
     const query = buildQuery();
-    const url = `${BASE_API_URL}?q=${encodeURIComponent(query)}&limit=20`;
+    const url = `${BASE_API_URL}?q=${encodeURIComponent(query)}&page=${currentPage}&limit=20`;
 
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
-
     const data = await res.json();
-    loader.style.display = "none";
 
-    renderAudiobooks(data.docs || []);
+    loader.style.display = "none";
+    renderAudiobooks(data.docs || [], append);
 
   } catch (err) {
-    console.error("Failed to load audiobooks:", err);
     loader.style.display = "none";
-
-    container.innerHTML = `
-      <div class="audiobook-card" style="border-left: 4px solid red;">
-        <h3>Error Loading Audiobooks</h3>
-        <p>Could not connect to Open Library.</p>
-        <p style="color:red;">${err.message}</p>
-      </div>
-    `;
+    container.innerHTML = `<p style="color:red;">Failed to load audiobooks.</p>`;
   }
 }
 
-// Render audiobook cards
-function renderAudiobooks(items) {
+// Render cards
+function renderAudiobooks(items, append) {
   const container = document.getElementById("audiobook-list");
-  container.innerHTML = "";
-
-  if (!items.length) {
-    container.innerHTML = `
-      <div class="audiobook-card">
-        <h3>No Results</h3>
-        <p>Try a different search term or category.</p>
-      </div>
-    `;
-    return;
-  }
 
   items.forEach(book => {
     const card = document.createElement("div");
@@ -83,21 +59,72 @@ function renderAudiobooks(items) {
       ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
       : "https://via.placeholder.com/300x220?text=No+Cover";
 
-    const author = book.author_name?.[0] || "Unknown";
-    const year = book.first_publish_year || "N/A";
-
     card.innerHTML = `
-      <img src="${cover}" class="cover" alt="Cover for ${book.title}" />
+      <img src="${cover}" class="cover" />
       <h3>${book.title}</h3>
-      <p><strong>Author:</strong> ${author}</p>
-      <p><strong>First Published:</strong> ${year}</p>
+      <p><strong>Author:</strong> ${book.author_name?.[0] || "Unknown"}</p>
+      <p><strong>Year:</strong> ${book.first_publish_year || "N/A"}</p>
     `;
 
+    card.addEventListener("click", () => openModal(book, cover));
     container.appendChild(card);
   });
 }
 
-// Handle category tab clicks
+// Modal
+function openModal(book, cover) {
+  const modal = document.getElementById("detail-modal");
+
+  document.getElementById("modal-cover").src = cover;
+  document.getElementById("modal-title").textContent = book.title;
+  document.getElementById("modal-author").textContent =
+    `Author: ${book.author_name?.[0] || "Unknown"}`;
+  document.getElementById("modal-year").textContent =
+    `First Published: ${book.first_publish_year || "N/A"}`;
+  document.getElementById("modal-description").textContent =
+    book.subtitle || "No description available.";
+
+  document.getElementById("favorite-btn").onclick = () => addFavorite(book, cover);
+
+  modal.classList.remove("hidden");
+}
+
+document.getElementById("modal-close").onclick = () => {
+  document.getElementById("detail-modal").classList.add("hidden");
+};
+
+// Favorites
+function addFavorite(book, cover) {
+  favorites.push({ ...book, cover });
+  renderFavorites();
+}
+
+function renderFavorites() {
+  const panel = document.getElementById("favorites-panel");
+  const list = document.getElementById("favorites-list");
+
+  panel.classList.remove("hidden");
+  list.innerHTML = "";
+
+  favorites.forEach(fav => {
+    const item = document.createElement("div");
+    item.className = "audiobook-card";
+    item.innerHTML = `
+      <img src="${fav.cover}" class="cover" />
+      <h3>${fav.title}</h3>
+      <p>${fav.author_name?.[0] || "Unknown"}</p>
+    `;
+    list.appendChild(item);
+  });
+}
+
+// Pagination
+document.getElementById("load-more").onclick = () => {
+  currentPage++;
+  loadAudiobooks(true);
+};
+
+// Tabs
 function setupCategoryTabs() {
   const tabs = document.querySelectorAll(".tab");
 
@@ -106,31 +133,41 @@ function setupCategoryTabs() {
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
 
-      currentCategory = tab.dataset.category || "all";
+      currentCategory = tab.dataset.category;
+      currentPage = 1;
       loadAudiobooks();
     });
   });
 }
 
-// Handle search
+// Search
 function setupSearch() {
   const input = document.getElementById("search-input");
   const button = document.getElementById("search-button");
 
   button.addEventListener("click", () => {
     currentSearchTerm = input.value;
+    currentPage = 1;
     loadAudiobooks();
   });
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       currentSearchTerm = input.value;
+      currentPage = 1;
       loadAudiobooks();
     }
   });
 }
 
-// Initialize
+// Dark Mode
+document.getElementById("dark-mode-toggle").onclick = () => {
+  const body = document.body;
+  body.classList.toggle("dark-mode");
+  body.classList.toggle("light-mode");
+};
+
+// Init
 document.addEventListener("DOMContentLoaded", () => {
   setupCategoryTabs();
   setupSearch();
