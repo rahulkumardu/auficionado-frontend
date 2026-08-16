@@ -75,7 +75,9 @@ function renderAudiobooks(items, append) {
       <p><strong>Year:</strong> ${book.first_publish_year || "N/A"}</p>
     `;
 
+    // ⭐ CLICK HANDLER — REQUIRED FOR MODAL
     card.addEventListener("click", () => openModal(book, cover));
+
     container.appendChild(card);
   });
 }

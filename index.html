@@ -53,13 +53,11 @@
       <p id="modal-year"></p>
       <p id="modal-description"></p>
 
-      <!-- ⭐ Audio Player Mock-Up -->
-      <div class="audio-player">
-        <button class="audio-btn">▶ Play Sample</button>
-        <div class="audio-bar">
-          <div class="audio-progress"></div>
-        </div>
-      </div>
+      <!-- ⭐ Real Audio Player -->
+      <audio id="modal-audio" controls style="width:100%; margin-top:1rem;">
+        <source id="modal-audio-src" src="" type="audio/mp3">
+        Your browser does not support audio playback.
+      </audio>
 
       <!-- ⭐ Favorites Button -->
       <button id="favorite-btn" class="favorite-btn">⭐ Add to Favorites</button>

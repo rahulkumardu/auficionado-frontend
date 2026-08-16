@@ -175,32 +175,9 @@ header {
 }
 
 /* Audio Player */
-.audio-player {
+audio {
   margin-top: 1rem;
-}
-
-.audio-btn {
-  padding: 0.5rem 1rem;
-  background: #007aff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.audio-bar {
   width: 100%;
-  height: 6px;
-  background: #ddd;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-}
-
-.audio-progress {
-  width: 30%;
-  height: 100%;
-  background: #007aff;
-  border-radius: 4px;
 }
 
 /* Favorites Panel */
@@ -265,12 +242,4 @@ body.dark-mode .load-more {
 
 body.dark-mode .modal-close {
   color: #fff;
-}
-
-body.dark-mode .audio-bar {
-  background: #555;
-}
-
-body.dark-mode .audio-progress {
-  background: #007aff;
 }
