@@ -10,65 +10,51 @@
 </head>
 
 <body class="light-mode">
-  <header>
-    <h1>Auficionado Audiobooks</h1>
-    <p class="subtitle">Discover audiobooks powered by Open Library</p>
 
-    <button id="dark-mode-toggle" class="dark-toggle">🌙 Dark Mode</button>
+  <header>
+    <h1>Auficionado</h1>
+
+    <div class="search-bar">
+      <input id="search-input" type="text" placeholder="Search audiobooks..." />
+      <button id="search-button">Search</button>
+    </div>
+
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
   </header>
 
-  <main>
-    <section class="controls">
-      <div class="search-bar">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search audiobooks by title or author..."
-        />
-        <button id="search-button">Search</button>
-      </div>
+  <nav class="tabs">
+    <button class="tab active" data-category="all">All</button>
+    <button class="tab" data-category="fiction">Fiction</button>
+    <button class="tab" data-category="nonfiction">Nonfiction</button>
+    <button class="tab" data-category="science">Science</button>
+    <button class="tab" data-category="history">History</button>
+  </nav>
 
-      <div class="tabs" id="category-tabs">
-        <button class="tab active" data-category="all">All</button>
-        <button class="tab" data-category="fiction">Fiction</button>
-        <button class="tab" data-category="nonfiction">Nonfiction</button>
-        <button class="tab" data-category="science">Science</button>
-        <button class="tab" data-category="history">History</button>
-      </div>
-    </section>
+  <div id="loader" class="loader">Loading...</div>
 
-    <div id="loader" class="loader"></div>
-    <div id="audiobook-list" class="grid"></div>
+  <section id="audiobook-list" class="audiobook-list"></section>
 
-    <button id="load-more" class="load-more">Load More</button>
-  </main>
+  <section id="favorites-panel" class="favorites hidden">
+    <h2>Favorites</h2>
+    <div id="favorites-list" class="favorites-list"></div>
+  </section>
 
-  <!-- Modal -->
   <div id="detail-modal" class="modal hidden">
     <div class="modal-content">
-      <span id="modal-close" class="modal-close">&times;</span>
+      <span id="modal-close" class="close">&times;</span>
       <img id="modal-cover" class="modal-cover" />
       <h2 id="modal-title"></h2>
       <p id="modal-author"></p>
       <p id="modal-year"></p>
       <p id="modal-description"></p>
 
-      <audio id="modal-audio" controls style="width:100%; margin-top:1rem;">
-        <source id="modal-audio-src" src="" type="audio/mp3">
+      <audio id="modal-audio" controls>
+        <source id="modal-audio-src" src="" type="audio/mpeg" />
       </audio>
 
-      <button id="favorite-btn" class="favorite-btn">⭐ Add to Favorites</button>
+      <button id="favorite-btn" class="favorite-btn">Add to Favorites</button>
     </div>
   </div>
-
-  <aside id="favorites-panel" class="favorites-panel hidden">
-    <h3>Your Favorites</h3>
-    <div id="favorites-list"></div>
-  </aside>
-
-  <footer>
-    <p>© 2026 Auficionado Prototype</p>
-  </footer>
 
   <script src="app.js"></script>
 </body>
