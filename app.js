@@ -2,10 +2,12 @@
 
 let currentCategory = "all";
 let currentSearchTerm = "";
-let currentPage = 1;
 let favorites = [];
+let currentIndex = 0;
+const PAGE_SIZE = 12;
+let filteredItems = [];
 
-const CATEGORY_QUERIES = {
+const CATEGORY_KEYWORDS = {
   all: "",
   fiction: "fiction",
   nonfiction: "nonfiction",
@@ -13,40 +15,40 @@ const CATEGORY_QUERIES = {
   history: "history"
 };
 
-// Load local JSON dataset
-async function loadAudiobooks(append = false) {
+async function loadAudiobooks(reset = true) {
   const loader = document.getElementById("loader");
   const container = document.getElementById("audiobook-list");
 
   try {
     loader.style.display = "block";
-    if (!append) container.innerHTML = "";
+    if (reset) {
+      container.innerHTML = "";
+      currentIndex = 0;
+    }
 
     const res = await fetch("audiobooks.json");
     const data = await res.json();
 
     loader.style.display = "none";
 
-    let items = data.items;
+    filteredItems = data.items;
 
-    // Category filter
-    const category = CATEGORY_QUERIES[currentCategory];
-    if (category) {
-      items = items.filter(item =>
-        item.description.toLowerCase().includes(category)
+    const categoryKeyword = CATEGORY_KEYWORDS[currentCategory];
+    if (categoryKeyword) {
+      filteredItems = filteredItems.filter(item =>
+        item.description.toLowerCase().includes(categoryKeyword)
       );
     }
 
-    // Search filter
     if (currentSearchTerm.trim()) {
       const term = currentSearchTerm.toLowerCase();
-      items = items.filter(item =>
+      filteredItems = filteredItems.filter(item =>
         item.title.toLowerCase().includes(term) ||
         item.author.toLowerCase().includes(term)
       );
     }
 
-    renderAudiobooks(items);
+    loadMoreItems();
 
   } catch (err) {
     loader.style.display = "none";
@@ -54,12 +56,13 @@ async function loadAudiobooks(append = false) {
   }
 }
 
-// Render cards
-function renderAudiobooks(items) {
+function loadMoreItems() {
   const container = document.getElementById("audiobook-list");
-  container.innerHTML = "";
 
-  items.forEach(book => {
+  const nextItems = filteredItems.slice(currentIndex, currentIndex + PAGE_SIZE);
+  currentIndex += PAGE_SIZE;
+
+  nextItems.forEach(book => {
     const card = document.createElement("div");
     card.className = "audiobook-card";
 
@@ -75,7 +78,26 @@ function renderAudiobooks(items) {
   });
 }
 
-// Modal
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
+    loadMoreItems();
+  }
+
+  const scrollTopBtn = document.getElementById("scroll-top");
+  if (window.scrollY > 400) {
+    scrollTopBtn.classList.add("show");
+  } else {
+    scrollTopBtn.classList.remove("show");
+  }
+});
+
+document.getElementById("scroll-top").onclick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
+
 function openModal(book) {
   const modal = document.getElementById("detail-modal");
 
@@ -88,8 +110,7 @@ function openModal(book) {
   document.getElementById("modal-audio-src").src = book.audio;
   document.getElementById("modal-audio").load();
 
-  document.getElementById("favorite-btn").onclick = () =>
-    addFavorite(book);
+  document.getElementById("favorite-btn").onclick = () => addFavorite(book);
 
   modal.classList.remove("hidden");
 }
@@ -98,7 +119,6 @@ document.getElementById("modal-close").onclick = () => {
   document.getElementById("detail-modal").classList.add("hidden");
 };
 
-// Favorites
 function addFavorite(book) {
   favorites.push(book);
   renderFavorites();
@@ -123,7 +143,6 @@ function renderFavorites() {
   });
 }
 
-// Tabs
 function setupCategoryTabs() {
   const tabs = document.querySelectorAll(".tab");
 
@@ -133,39 +152,36 @@ function setupCategoryTabs() {
       tab.classList.add("active");
 
       currentCategory = tab.dataset.category;
-      loadAudiobooks();
+      loadAudiobooks(true);
     });
   });
 }
 
-// Search
 function setupSearch() {
   const input = document.getElementById("search-input");
   const button = document.getElementById("search-button");
 
   button.addEventListener("click", () => {
     currentSearchTerm = input.value;
-    loadAudiobooks();
+    loadAudiobooks(true);
   });
 
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") {
       currentSearchTerm = input.value;
-      loadAudiobooks();
+      loadAudiobooks(true);
     }
   });
 }
 
-// Dark Mode
 document.getElementById("dark-mode-toggle").onclick = () => {
   const body = document.body;
   body.classList.toggle("dark-mode");
   body.classList.toggle("light-mode");
 };
 
-// Init
 document.addEventListener("DOMContentLoaded", () => {
   setupCategoryTabs();
   setupSearch();
-  loadAudiobooks();
+  loadAudiobooks(true);
 });
