@@ -3,18 +3,18 @@
 // ⭐ Google Books API
 const GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes";
 
-// Category → keyword mapping
+// ⭐ Audiobook-friendly category → query mapping
 const CATEGORY_QUERIES = {
-  all: "audiobook",
-  fiction: "fiction audiobook",
-  nonfiction: "nonfiction audiobook",
-  science: "science audiobook",
-  history: "history audiobook"
+  all: "subject:audio OR subject:spoken word OR audio cd OR mp3 audio",
+  fiction: "fiction audio OR fiction spoken word OR fiction mp3",
+  nonfiction: "nonfiction audio OR nonfiction spoken word",
+  science: "science audio OR science spoken word",
+  history: "history audio OR history spoken word"
 };
 
 let currentCategory = "all";
 let currentSearchTerm = "";
-let currentPage = 0; // Google Books uses startIndex instead of pages
+let currentPage = 0; // Google Books uses startIndex
 let favorites = [];
 
 // ⭐ Real audio samples (public domain demo clips)
@@ -52,7 +52,7 @@ async function loadAudiobooks(append = false) {
 
     loader.style.display = "none";
 
-    if (!data.items) {
+    if (!data.items || data.items.length === 0) {
       container.innerHTML = `<p style="color:red;">No audiobooks found.</p>`;
       return;
     }
