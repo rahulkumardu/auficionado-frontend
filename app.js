@@ -1,4 +1,4 @@
-// Rahul Kumar - Auficionado Front-End
+// Rahul Kumar - Auficionado Prototype (Front-End Only)
 
 let currentCategory = "all";
 let currentSearchTerm = "";
