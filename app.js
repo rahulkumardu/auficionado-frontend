@@ -1,10 +1,30 @@
-// Rahul Kumar - Auficionado Prototype (Front-End Only)
+// Rahul Kumar - Auficionado Prototype
 
 let currentCategory = "all";
 let currentSearchTerm = "";
 let favorites = [];
 let currentPage = 1;
 const PAGE_SIZE = 20;
+
+const audiobooks = [
+  {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    year: 1813,
+    cover: "https://picsum.photos/id/1015/400/600",
+    description: "A classic romantic novel exploring manners and society.",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  },
+  {
+    title: "Moby Dick",
+    author: "Herman Melville",
+    year: 1851,
+    cover: "https://picsum.photos/id/1025/400/600",
+    description: "Captain Ahab's obsessive quest for the white whale.",
+    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  }
+  // (You originally had ~10–12 hardcoded items here)
+];
 
 const CATEGORY_KEYWORDS = {
   all: "",
@@ -14,52 +34,42 @@ const CATEGORY_KEYWORDS = {
   history: "history"
 };
 
-async function loadAudiobooks(append = false) {
-  const loader = document.getElementById("loader");
+function loadAudiobooks(append = false) {
   const container = document.getElementById("audiobook-list");
 
-  try {
-    loader.style.display = "block";
-    if (!append) container.innerHTML = "";
+  if (!append) {
+    container.innerHTML = "";
+    currentPage = 1;
+  }
 
-    const res = await fetch("audiobooks.json");
-    const data = await res.json();
+  let items = audiobooks;
 
-    loader.style.display = "none";
+  const categoryKeyword = CATEGORY_KEYWORDS[currentCategory];
+  if (categoryKeyword) {
+    items = items.filter(item =>
+      item.description.toLowerCase().includes(categoryKeyword)
+    );
+  }
 
-    let items = data.items;
+  if (currentSearchTerm.trim()) {
+    const term = currentSearchTerm.toLowerCase();
+    items = items.filter(item =>
+      item.title.toLowerCase().includes(term) ||
+      item.author.toLowerCase().includes(term)
+    );
+  }
 
-    const categoryKeyword = CATEGORY_KEYWORDS[currentCategory];
-    if (categoryKeyword) {
-      items = items.filter(item =>
-        item.description.toLowerCase().includes(categoryKeyword)
-      );
-    }
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const pageItems = items.slice(start, end);
 
-    if (currentSearchTerm.trim()) {
-      const term = currentSearchTerm.toLowerCase();
-      items = items.filter(item =>
-        item.title.toLowerCase().includes(term) ||
-        item.author.toLowerCase().includes(term)
-      );
-    }
+  renderAudiobooks(pageItems);
 
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    const pageItems = items.slice(start, end);
-
-    renderAudiobooks(pageItems);
-
-    const loadMoreBtn = document.getElementById("load-more");
-    if (end >= items.length) {
-      loadMoreBtn.style.display = "none";
-    } else {
-      loadMoreBtn.style.display = "block";
-    }
-
-  } catch (err) {
-    loader.style.display = "none";
-    container.innerHTML = `<p style="color:red;">Failed to load audiobooks.</p>`;
+  const loadMoreBtn = document.getElementById("load-more");
+  if (end >= items.length) {
+    loadMoreBtn.style.display = "none";
+  } else {
+    loadMoreBtn.style.display = "block";
   }
 }
 
@@ -141,7 +151,6 @@ function setupCategoryTabs() {
       tab.classList.add("active");
 
       currentCategory = tab.dataset.category;
-      currentPage = 1;
       loadAudiobooks();
     });
   });
@@ -153,14 +162,12 @@ function setupSearch() {
 
   button.addEventListener("click", () => {
     currentSearchTerm = input.value;
-    currentPage = 1;
     loadAudiobooks();
   });
 
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") {
       currentSearchTerm = input.value;
-      currentPage = 1;
       loadAudiobooks();
     }
   });

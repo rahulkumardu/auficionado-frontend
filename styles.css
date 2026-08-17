@@ -1,4 +1,4 @@
-/* Rahul Kumar - Auficionado Front-End */
+/* Rahul Kumar - Auficionado Prototype */
 
 body {
   margin: 0;
@@ -50,12 +50,6 @@ header {
 .tab.active {
   background: #4a6fa5;
   color: white;
-}
-
-.loader {
-  text-align: center;
-  padding: 20px;
-  font-size: 18px;
 }
 
 .audiobook-list {
