@@ -57,12 +57,16 @@ async function loadAudiobooks(reset = true) {
 }
 
 function loadMoreItems() {
+  if (!filteredItems || filteredItems.length === 0) return;
+
   const container = document.getElementById("audiobook-list");
 
   const nextItems = filteredItems.slice(currentIndex, currentIndex + PAGE_SIZE);
   currentIndex += PAGE_SIZE;
 
   nextItems.forEach(book => {
+    if (!book) return;
+
     const card = document.createElement("div");
     card.className = "audiobook-card";
 
@@ -79,6 +83,8 @@ function loadMoreItems() {
 }
 
 window.addEventListener("scroll", () => {
+  if (filteredItems.length === 0) return;
+
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
     loadMoreItems();
   }
