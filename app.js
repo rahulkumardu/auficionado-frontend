@@ -3,9 +3,8 @@
 let currentCategory = "all";
 let currentSearchTerm = "";
 let favorites = [];
-let currentIndex = 0;
-const PAGE_SIZE = 12;
-let filteredItems = [];
+let currentPage = 1;
+const PAGE_SIZE = 20;
 
 const CATEGORY_KEYWORDS = {
   all: "",
@@ -15,40 +14,48 @@ const CATEGORY_KEYWORDS = {
   history: "history"
 };
 
-async function loadAudiobooks(reset = true) {
+async function loadAudiobooks(append = false) {
   const loader = document.getElementById("loader");
   const container = document.getElementById("audiobook-list");
 
   try {
     loader.style.display = "block";
-    if (reset) {
-      container.innerHTML = "";
-      currentIndex = 0;
-    }
+    if (!append) container.innerHTML = "";
 
     const res = await fetch("audiobooks.json");
     const data = await res.json();
 
     loader.style.display = "none";
 
-    filteredItems = data.items;
+    let items = data.items;
 
     const categoryKeyword = CATEGORY_KEYWORDS[currentCategory];
     if (categoryKeyword) {
-      filteredItems = filteredItems.filter(item =>
+      items = items.filter(item =>
         item.description.toLowerCase().includes(categoryKeyword)
       );
     }
 
     if (currentSearchTerm.trim()) {
       const term = currentSearchTerm.toLowerCase();
-      filteredItems = filteredItems.filter(item =>
+      items = items.filter(item =>
         item.title.toLowerCase().includes(term) ||
         item.author.toLowerCase().includes(term)
       );
     }
 
-    loadMoreItems();
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const pageItems = items.slice(start, end);
+
+    renderAudiobooks(pageItems);
+
+    const loadMoreBtn = document.getElementById("load-more");
+    if (end >= items.length) {
+      loadMoreBtn.style.display = "none";
+    } else {
+      loadMoreBtn.style.display = "block";
+    }
 
   } catch (err) {
     loader.style.display = "none";
@@ -56,17 +63,10 @@ async function loadAudiobooks(reset = true) {
   }
 }
 
-function loadMoreItems() {
-  if (!filteredItems || filteredItems.length === 0) return;
-
+function renderAudiobooks(items) {
   const container = document.getElementById("audiobook-list");
 
-  const nextItems = filteredItems.slice(currentIndex, currentIndex + PAGE_SIZE);
-  currentIndex += PAGE_SIZE;
-
-  nextItems.forEach(book => {
-    if (!book) return;
-
+  items.forEach(book => {
     const card = document.createElement("div");
     card.className = "audiobook-card";
 
@@ -82,26 +82,9 @@ function loadMoreItems() {
   });
 }
 
-window.addEventListener("scroll", () => {
-  if (filteredItems.length === 0) return;
-
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
-    loadMoreItems();
-  }
-
-  const scrollTopBtn = document.getElementById("scroll-top");
-  if (window.scrollY > 400) {
-    scrollTopBtn.classList.add("show");
-  } else {
-    scrollTopBtn.classList.remove("show");
-  }
-});
-
-document.getElementById("scroll-top").onclick = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+document.getElementById("load-more").onclick = () => {
+  currentPage++;
+  loadAudiobooks(true);
 };
 
 function openModal(book) {
@@ -158,7 +141,8 @@ function setupCategoryTabs() {
       tab.classList.add("active");
 
       currentCategory = tab.dataset.category;
-      loadAudiobooks(true);
+      currentPage = 1;
+      loadAudiobooks();
     });
   });
 }
@@ -169,13 +153,15 @@ function setupSearch() {
 
   button.addEventListener("click", () => {
     currentSearchTerm = input.value;
-    loadAudiobooks(true);
+    currentPage = 1;
+    loadAudiobooks();
   });
 
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") {
       currentSearchTerm = input.value;
-      loadAudiobooks(true);
+      currentPage = 1;
+      loadAudiobooks();
     }
   });
 }
@@ -189,5 +175,5 @@ document.getElementById("dark-mode-toggle").onclick = () => {
 document.addEventListener("DOMContentLoaded", () => {
   setupCategoryTabs();
   setupSearch();
-  loadAudiobooks(true);
+  loadAudiobooks();
 });
