@@ -206,7 +206,7 @@ audio {
   cursor: pointer;
 }
 
-/* ⭐ Dark Mode Overrides */
+/* Dark Mode Overrides */
 body.dark-mode .audiobook-card,
 body.dark-mode .modal-content,
 body.dark-mode .favorites-panel {

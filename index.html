@@ -12,7 +12,7 @@
 <body class="light-mode">
   <header>
     <h1>Auficionado Audiobooks</h1>
-    <p class="subtitle">Discover audiobooks powered by Google Books</p>
+    <p class="subtitle">Discover audiobooks powered by Open Library</p>
 
     <button id="dark-mode-toggle" class="dark-toggle">🌙 Dark Mode</button>
   </header>
@@ -43,7 +43,7 @@
     <button id="load-more" class="load-more">Load More</button>
   </main>
 
-  <!-- ⭐ Detail Modal -->
+  <!-- Modal -->
   <div id="detail-modal" class="modal hidden">
     <div class="modal-content">
       <span id="modal-close" class="modal-close">&times;</span>
@@ -53,18 +53,14 @@
       <p id="modal-year"></p>
       <p id="modal-description"></p>
 
-      <!-- ⭐ Real Audio Player -->
       <audio id="modal-audio" controls style="width:100%; margin-top:1rem;">
         <source id="modal-audio-src" src="" type="audio/mp3">
-        Your browser does not support audio playback.
       </audio>
 
-      <!-- ⭐ Favorites Button -->
       <button id="favorite-btn" class="favorite-btn">⭐ Add to Favorites</button>
     </div>
   </div>
 
-  <!-- ⭐ Favorites Sidebar -->
   <aside id="favorites-panel" class="favorites-panel hidden">
     <h3>Your Favorites</h3>
     <div id="favorites-list"></div>
