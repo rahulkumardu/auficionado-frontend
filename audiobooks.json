@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "year": 1813,
+      "cover": "https://covers.openlibrary.org/b/id/8231856-M.jpg",
+      "description": "A classic romantic novel exploring manners, marriage, and society.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "year": 1851,
+      "cover": "https://covers.openlibrary.org/b/id/8100921-M.jpg",
+      "description": "Captain Ahab’s obsessive quest for the white whale.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+      "title": "Frankenstein",
+      "author": "Mary Shelley",
+      "year": 1818,
+      "cover": "https://covers.openlibrary.org/b/id/8226191-M.jpg",
+      "description": "A gothic tale of science, ambition, and unintended consequences.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+    },
+    {
+      "title": "Dracula",
+      "author": "Bram Stoker",
+      "year": 1897,
+      "cover": "https://covers.openlibrary.org/b/id/8235116-M.jpg",
+      "description": "The legendary vampire story that shaped modern horror.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+    },
+    {
+      "title": "The Art of War",
+      "author": "Sun Tzu",
+      "year": -500,
+      "cover": "https://covers.openlibrary.org/b/id/8319250-M.jpg",
+      "description": "Ancient Chinese military strategy and philosophy.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    },
+    {
+      "title": "The Adventures of Sherlock Holmes",
+      "author": "Arthur Conan Doyle",
+      "year": 1892,
+      "cover": "https://covers.openlibrary.org/b/id/8226190-M.jpg",
+      "description": "Detective Sherlock Holmes solves mysteries with brilliant deduction.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+    },
+    {
+      "title": "War and Peace",
+      "author": "Leo Tolstoy",
+      "year": 1869,
+      "cover": "https://covers.openlibrary.org/b/id/8231857-M.jpg",
+      "description": "Epic tale of Russian society during the Napoleonic Wars.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+    },
+    {
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky",
+      "year": 1866,
+      "cover": "https://covers.openlibrary.org/b/id/8231858-M.jpg",
+      "description": "A psychological exploration of guilt, morality, and redemption.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "year": 1925,
+      "cover": "https://covers.openlibrary.org/b/id/8226192-M.jpg",
+      "description": "A tragic story of wealth, love, and the American Dream.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "year": 1949,
+      "cover": "https://covers.openlibrary.org/b/id/8226193-M.jpg",
+      "description": "A dystopian vision of surveillance, control, and totalitarianism.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+    },
+    {
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "year": 1937,
+      "cover": "https://covers.openlibrary.org/b/id/8100922-M.jpg",
+      "description": "Bilbo Baggins embarks on an unexpected adventure.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3"
+    },
+    {
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "year": 1954,
+      "cover": "https://covers.openlibrary.org/b/id/8100923-M.jpg",
+      "description": "The epic quest to destroy the One Ring.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "year": 1960,
+      "cover": "https://covers.openlibrary.org/b/id/8226194-M.jpg",
+      "description": "A powerful story of justice and racial inequality.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3"
+    },
+    {
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "year": 1951,
+      "cover": "https://covers.openlibrary.org/b/id/8226195-M.jpg",
+      "description": "Holden Caulfield’s iconic journey through adolescence.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3"
+    },
+    {
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "year": 1932,
+      "cover": "https://covers.openlibrary.org/b/id/8226196-M.jpg",
+      "description": "A futuristic society built on engineered happiness.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3"
+    },
+    {
+      "title": "The Odyssey",
+      "author": "Homer",
+      "year": -700,
+      "cover": "https://covers.openlibrary.org/b/id/8231859-M.jpg",
+      "description": "Odysseus legendary journey home after the Trojan War.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
+    },
+    {
+      "title": "The Iliad",
+      "author": "Homer",
+      "year": -750,
+      "cover": "https://covers.openlibrary.org/b/id/8231860-M.jpg",
+      "description": "The epic tale of the Trojan War and Achilles.",
+      "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"
+    }
+  ]
+}
