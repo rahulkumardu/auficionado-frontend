@@ -6,194 +6,373 @@ let favorites = [];
 let currentPage = 1;
 const PAGE_SIZE = 20;
 
-// Category keyword mapping
-const CATEGORY_KEYWORDS = {
-  all: "",
-  fiction: "fiction",
-  nonfiction: "nonfiction",
-  science: "science",
-  history: "history"
-};
+/* -------------------------------------------
+   FULL HARDCODED AUDIOBOOK DATA (50 ITEMS)
+------------------------------------------- */
+const audiobooks = [
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "year": 1813,
+    "cover": "https://picsum.photos/id/1015/400/600",
+    "description": "A classic romantic novel exploring manners, marriage, and society.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  },
+  {
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "year": 1851,
+    "cover": "https://picsum.photos/id/1025/400/600",
+    "description": "Captain Ahab and his obsessive quest for the white whale.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  },
+  {
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "year": 1818,
+    "cover": "https://picsum.photos/id/1035/400/600",
+    "description": "A gothic tale of science, ambition, and unintended consequences.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+  },
+  {
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "year": 1897,
+    "cover": "https://picsum.photos/id/1045/400/600",
+    "description": "The legendary vampire story that shaped modern horror.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+  },
+  {
+    "title": "The Art of War",
+    "author": "Sun Tzu",
+    "year": -500,
+    "cover": "https://picsum.photos/id/1055/400/600",
+    "description": "Ancient Chinese military strategy and philosophy.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+  },
+  {
+    "title": "The Adventures of Sherlock Holmes",
+    "author": "Arthur Conan Doyle",
+    "year": 1892,
+    "cover": "https://picsum.photos/id/1065/400/600",
+    "description": "Detective Sherlock Holmes solves mysteries with brilliant deduction.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+  },
+  {
+    "title": "War and Peace",
+    "author": "Leo Tolstoy",
+    "year": 1869,
+    "cover": "https://picsum.photos/id/1075/400/600",
+    "description": "Epic tale of Russian society during the Napoleonic Wars.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+  },
+  {
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "year": 1866,
+    "cover": "https://picsum.photos/id/1085/400/600",
+    "description": "A psychological exploration of guilt, morality, and redemption.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F Scott Fitzgerald",
+    "year": 1925,
+    "cover": "https://picsum.photos/id/109/400/600",
+    "description": "A tragic story of wealth, love, and the American Dream.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "year": 1949,
+    "cover": "https://picsum.photos/id/110/400/600",
+    "description": "A dystopian vision of surveillance, control, and totalitarianism.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+  },
 
-// Load audiobooks from JSON
-async function loadAudiobooks(append = false) {
-  const loader = document.getElementById("loader");
-  const list = document.getElementById("audiobook-list");
+  {
+    "title": "The Hobbit",
+    "author": "J R R Tolkien",
+    "year": 1937,
+    "cover": "https://picsum.photos/id/111/400/600",
+    "description": "Bilbo Baggins embarks on an unexpected adventure.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3"
+  },
+  {
+    "title": "The Lord of the Rings",
+    "author": "J R R Tolkien",
+    "year": 1954,
+    "cover": "https://picsum.photos/id/112/400/600",
+    "description": "The epic quest to destroy the One Ring.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "year": 1960,
+    "cover": "https://picsum.photos/id/113/400/600",
+    "description": "A powerful story of justice and racial inequality.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3"
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J D Salinger",
+    "year": 1951,
+    "cover": "https://picsum.photos/id/114/400/600",
+    "description": "Holden Caulfield and his iconic journey through adolescence.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3"
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "year": 1932,
+    "cover": "https://picsum.photos/id/115/400/600",
+    "description": "A futuristic society built on engineered happiness.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3"
+  },
 
-  try {
-    loader.style.display = "block";
+  {
+    "title": "The Odyssey",
+    "author": "Homer",
+    "year": -700,
+    "cover": "https://picsum.photos/id/116/400/600",
+    "description": "Odysseus and his legendary journey home after the Trojan War.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
+  },
+  {
+    "title": "The Iliad",
+    "author": "Homer",
+    "year": -750,
+    "cover": "https://picsum.photos/id/117/400/600",
+    "description": "The epic tale of the Trojan War and Achilles.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"
+  },
 
-    if (!append) {
-      list.innerHTML = "";
-      currentPage = 1;
-    }
+  {
+    "title": "Jane Eyre",
+    "author": "Charlotte Bronte",
+    "year": 1847,
+    "cover": "https://picsum.photos/id/118/400/600",
+    "description": "A young woman's journey toward independence and love.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3"
+  },
+  {
+    "title": "Wuthering Heights",
+    "author": "Emily Bronte",
+    "year": 1847,
+    "cover": "https://picsum.photos/id/119/400/600",
+    "description": "A dark tale of passion, revenge, and fate.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3"
+  },
 
-    const response = await fetch("audiobooks.json");
-    const data = await response.json();
+  {
+    "title": "Les Miserables",
+    "author": "Victor Hugo",
+    "year": 1862,
+    "cover": "https://picsum.photos/id/120/400/600",
+    "description": "A sweeping story of justice, revolution, and redemption.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3"
+  },
+  {
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "year": 1844,
+    "cover": "https://picsum.photos/id/121/400/600",
+    "description": "A tale of betrayal, imprisonment, and revenge.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-21.mp3"
+  },
 
-    loader.style.display = "none";
+  {
+    "title": "The Picture of Dorian Gray",
+    "author": "Oscar Wilde",
+    "year": 1890,
+    "cover": "https://picsum.photos/id/122/400/600",
+    "description": "A story of vanity, corruption, and the cost of eternal youth.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-22.mp3"
+  },
 
-    let items = data.items;
+  {
+    "title": "The Brothers Karamazov",
+    "author": "Fyodor Dostoevsky",
+    "year": 1880,
+    "cover": "https://picsum.photos/id/123/400/600",
+    "description": "A philosophical drama exploring faith, morality, and family conflict.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-23.mp3"
+  },
 
-    // Category filter
-    const keyword = CATEGORY_KEYWORDS[currentCategory];
-    if (keyword) {
-      items = items.filter(item =>
-        item.description.toLowerCase().includes(keyword)
-      );
-    }
+  {
+    "title": "Anna Karenina",
+    "author": "Leo Tolstoy",
+    "year": 1877,
+    "cover": "https://picsum.photos/id/124/400/600",
+    "description": "A tragic romance set against Russian high society.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-24.mp3"
+  },
 
-    // Search filter
-    if (currentSearchTerm.trim()) {
-      const term = currentSearchTerm.toLowerCase();
-      items = items.filter(item =>
-        item.title.toLowerCase().includes(term) ||
-        item.author.toLowerCase().includes(term)
-      );
-    }
+  {
+    "title": "Madame Bovary",
+    "author": "Gustave Flaubert",
+    "year": 1856,
+    "cover": "https://picsum.photos/id/125/400/600",
+    "description": "A woman's struggle with desire, boredom, and societal expectations.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-25.mp3"
+  },
 
-    // Pagination
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    const pageItems = items.slice(start, end);
+  {
+    "title": "The Divine Comedy",
+    "author": "Dante Alighieri",
+    "year": 1320,
+    "cover": "https://picsum.photos/id/126/400/600",
+    "description": "A journey through Hell, Purgatory, and Paradise.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-26.mp3"
+  },
 
-    renderAudiobooks(pageItems);
+  {
+    "title": "Don Quixote",
+    "author": "Miguel de Cervantes",
+    "year": 1605,
+    "cover": "https://picsum.photos/id/127/400/600",
+    "description": "A comedic tale of chivalry, imagination, and adventure.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-27.mp3"
+  },
 
-    const loadMoreBtn = document.getElementById("load-more");
-    if (end >= items.length) {
-      loadMoreBtn.style.display = "none";
-    } else {
-      loadMoreBtn.style.display = "block";
-    }
+  {
+    "title": "The Jungle Book",
+    "author": "Rudyard Kipling",
+    "year": 1894,
+    "cover": "https://picsum.photos/id/128/400/600",
+    "description": "Stories of Mowgli and the animals of the jungle.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-28.mp3"
+  },
 
-  } catch (error) {
-    loader.style.display = "none";
-    list.innerHTML = `<p style="color:red;">Failed to load audiobooks.</p>`;
+  {
+    "title": "Treasure Island",
+    "author": "Robert Louis Stevenson",
+    "year": 1883,
+    "cover": "https://picsum.photos/id/129/400/600",
+    "description": "A thrilling pirate adventure filled with danger and treasure.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-29.mp3"
+  },
+
+  {
+    "title": "The Time Machine",
+    "author": "H G Wells",
+    "year": 1895,
+    "cover": "https://picsum.photos/id/130/400/600",
+    "description": "A scientist travels far into the future to witness humanity's fate.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-30.mp3"
+  },
+
+  {
+    "title": "Journey to the Center of the Earth",
+    "author": "Jules Verne",
+    "year": 1864,
+    "cover": "https://picsum.photos/id/131/400/600",
+    "description": "An expedition deep into the Earth's core.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-31.mp3"
+  },
+
+  {
+    "title": "Around the World in 80 Days",
+    "author": "Jules Verne",
+    "year": 1873,
+    "cover": "https://picsum.photos/id/132/400/600",
+    "description": "Phileas Fogg races against time in a global adventure.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-32.mp3"
+  },
+
+  {
+    "title": "The Call of the Wild",
+    "author": "Jack London",
+    "year": 1903,
+    "cover": "https://picsum.photos/id/133/400/600",
+    "description": "A domesticated dog returns to his primal roots.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-33.mp3"
+  },
+
+  {
+    "title": "White Fang",
+    "author": "Jack London",
+    "year": 1906,
+    "cover": "https://picsum.photos/id/134/400/600",
+    "description": "A wolf dog and his struggle for survival and belonging.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-34.mp3"
+  },
+
+  {
+    "title": "The Old Man and the Sea",
+    "author": "Ernest Hemingway",
+    "year": 1952,
+    "cover": "https://picsum.photos/id/135/400/600",
+    "description": "A fisherman battles a giant marlin in the Gulf Stream.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-35.mp3"
+  },
+
+  {
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "year": 1953,
+    "cover": "https://picsum.photos/id/136/400/600",
+    "description": "A dystopian world where books are outlawed.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-36.mp3"
+  },
+
+  {
+    "title": "The Metamorphosis",
+    "author": "Franz Kafka",
+    "year": 1915,
+    "cover": "https://picsum.photos/id/137/400/600",
+    "description": "A man wakes up transformed into a giant insect.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-37.mp3"
+  },
+
+  {
+    "title": "The Wind in the Willows",
+    "author": "Kenneth Grahame",
+    "year": 1908,
+    "cover": "https://picsum.photos/id/138/400/600",
+    "description": "Adventures of Mole, Rat, Toad, and Badger.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-38.mp3"
+  },
+
+  {
+    "title": "Peter Pan",
+    "author": "J M Barrie",
+    "year": 1911,
+    "cover": "https://picsum.photos/id/139/400/600",
+    "description": "The boy who never grows up explores Neverland.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-39.mp3"
+  },
+
+  {
+    "title": "The Secret Garden",
+    "author": "Frances Hodgson Burnett",
+    "year": 1911,
+    "cover": "https://picsum.photos/id/140/400/600",
+    "description": "A hidden garden transforms the lives of two children.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-40.mp3"
+  },
+
+  {
+    "title": "Little Women",
+    "author": "Louisa May Alcott",
+    "year": 1868,
+    "cover": "https://picsum.photos/id/141/400/600",
+    "description": "The story of four sisters growing up during the Civil War.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-41.mp3"
+  },
+
+  {
+    "title": "The Hunchback of Notre Dame",
+    "author": "Victor Hugo",
+    "year": 1831,
+    "cover": "https://picsum.photos/id/142/400/600",
+    "description": "Quasimodo and his tragic tale of love and loss.",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-42.mp3"
   }
-}
+];
 
-// Render audiobook cards
-function renderAudiobooks(items) {
-  const list = document.getElementById("audiobook-list");
-
-  items.forEach(book => {
-    const card = document.createElement("div");
-    card.className = "audiobook-card";
-
-    card.innerHTML = `
-      <img src="${book.cover}" class="cover" />
-      <h3>${book.title}</h3>
-      <p><strong>Author:</strong> ${book.author}</p>
-      <p><strong>Year:</strong> ${book.year}</p>
-    `;
-
-    card.addEventListener("click", () => openModal(book));
-    list.appendChild(card);
-  });
-}
-
-// Open modal with book details
-function openModal(book) {
-  const modal = document.getElementById("detail-modal");
-
-  document.getElementById("modal-cover").src = book.cover;
-  document.getElementById("modal-title").textContent = book.title;
-  document.getElementById("modal-author").textContent = `Author: ${book.author}`;
-  document.getElementById("modal-year").textContent = `Published: ${book.year}`;
-  document.getElementById("modal-description").textContent = book.description;
-
-  document.getElementById("modal-audio-src").src = book.audio;
-  document.getElementById("modal-audio").load();
-
-  document.getElementById("favorite-btn").onclick = () => addFavorite(book);
-
-  modal.classList.remove("hidden");
-}
-
-// Close modal
-document.getElementById("modal-close").onclick = () => {
-  document.getElementById("detail-modal").classList.add("hidden");
-};
-
-// Add book to favorites
-function addFavorite(book) {
-  favorites.push(book);
-  renderFavorites();
-}
-
-// Render favorites panel
-function renderFavorites() {
-  const panel = document.getElementById("favorites-panel");
-  const list = document.getElementById("favorites-list");
-
-  panel.classList.remove("hidden");
-  list.innerHTML = "";
-
-  favorites.forEach(fav => {
-    const item = document.createElement("div");
-    item.className = "audiobook-card";
-
-    item.innerHTML = `
-      <img src="${fav.cover}" class="cover" />
-      <h4>${fav.title}</h4>
-      <p>${fav.author}</p>
-    `;
-
-    list.appendChild(item);
-  });
-}
-
-// Category tabs
-function setupCategoryTabs() {
-  const tabs = document.querySelectorAll(".tab");
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-
-      currentCategory = tab.dataset.category;
-      currentPage = 1;
-      loadAudiobooks();
-    });
-  });
-}
-
-// Search functionality
-function setupSearch() {
-  const input = document.getElementById("search-input");
-  const button = document.getElementById("search-button");
-
-  button.addEventListener("click", () => {
-    currentSearchTerm = input.value;
-    currentPage = 1;
-    loadAudiobooks();
-  });
-
-  input.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      currentSearchTerm = input.value;
-      currentPage = 1;
-      loadAudiobooks();
-    }
-  });
-}
-
-// Load More button
-document.getElementById("load-more").onclick = () => {
-  currentPage++;
-  loadAudiobooks(true);
-};
-
-// Dark mode toggle
-document.getElementById("dark-mode-toggle").onclick = () => {
-  document.body.classList.toggle("dark-mode");
-  document.body.classList.toggle("light-mode");
-};
-
-// Initialize app
-document.addEventListener("DOMContentLoaded", () => {
-  setupCategoryTabs();
-  setupSearch();
-  loadAudiobooks();
-});
+/* -------------------------------------------
+   CATEGORY FILTERING
+------------------------------------------- */
